@@ -1,0 +1,31 @@
+dependencies:
+  SwiftGPIO:
+    component_hash: 
+      5eb14e0180193f0b96a5069450b8e783d306929a5f3da8de0a211b5d694e7711
+    dependencies:
+    - git: https://github.com/nixit22/esp-idf-swift-platform.git
+      name: SwiftPlatform
+    source:
+      git: https://github.com/nixit22/esp-idf-swift-gpio.git
+      path: .
+      type: git
+    version: 97cc5b8d4e204afec3962221291aa20fc0d62188
+  SwiftPlatform:
+    component_hash: 
+      04430f51b416aa88ab120a0562b64e1c6a65622cdc044ae1e3085a52fb0f3ab5
+    dependencies: []
+    source:
+      git: https://github.com/nixit22/esp-idf-swift-platform.git
+      path: .
+      type: git
+    version: f79cafac7b275386814200de97bdd14507d068dd
+  idf:
+    source:
+      type: idf
+    version: 5.5.2
+direct_dependencies:
+- SwiftGPIO
+- SwiftPlatform
+manifest_hash: aebbd14df13fb3f70f68882abe79fb7edb3a92444ba4864252289be3c75b5945
+target: esp32c6
+version: 2.0.0

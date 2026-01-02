@@ -1,0 +1,5 @@
+dependencies:
+  SwiftPlatform:
+    git: https://github.com/nixit22/esp-idf-swift-platform.git
+  SwiftGPIO:
+    git: https://github.com/nixit22/esp-idf-swift-gpio.git

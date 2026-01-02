@@ -1,0 +1,54 @@
+name: Build ESP-IDF Swift Project
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: espressif/idf:v5.5.2
+    
+    defaults:
+      run:
+        shell: bash
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Install Swiftly and Swift toolchain
+        run: |
+          # Install required dependencies
+          apt-get update
+          apt-get install -y curl ca-certificates gnupg2 libcurl4-openssl-dev libpython3-dev libxml2-dev libz3-dev pkg-config zlib1g-dev
+          # Download swiftly binary
+          curl -L https://download.swift.org/swiftly/linux/swiftly-$(uname -m).tar.gz > swiftly.tar.gz
+          tar zxf swiftly.tar.gz
+          
+          # Initialize swiftly
+          export SWIFTLY_HOME_DIR="$HOME/.swiftly"
+
+          ./swiftly init --skip-install --no-modify-profile -y
+          # Install Swift env
+          . $HOME/.swiftly/env.sh
+          # Install swift toolchain
+          swiftly install
+
+      - name: Build project
+        run: |
+          # Source Swift environment
+          . $HOME/.swiftly/env.sh
+          # Source ESP-IDF environment
+          . $IDF_PATH/export.sh
+          # Build the project
+          idf.py build
+      
+      - name: Display build summary
+        if: success()
+        run: |
+          echo "✅ Build completed successfully!"
